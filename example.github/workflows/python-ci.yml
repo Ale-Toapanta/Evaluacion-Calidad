@@ -1,0 +1,42 @@
+name: Integración Continua Python
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Obtener el código
+      uses: actions/checkout@v3
+
+    - name: Configurar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Instalar dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Ejecutar pruebas unitarias
+      run: |
+        pytest
+
+    - name: Sello de Victoria
+      if: success()
+      run: |
+        echo "========================================="
+        echo "      _    _ "
+        echo "     (o)--(o)"
+        echo "    /.______.\ "
+        echo "    \________/ "
+        echo "   ./        \. "
+        echo "  ( .        , )"
+        echo "   \ \_\\//_/ / "
+        echo "    ~~  ~~  ~~ "
+        echo " ¡MISION CUMPLIDA! PRUEBAS SUPERADAS"
+        echo "========================================="
